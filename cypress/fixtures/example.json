@@ -1,0 +1,16 @@
+{
+  "fullName": "Christopher Owusu",
+  "email": "christopher.owusu@amalitech.com",
+  "fullNameValid": "Joel Bamfo",
+  "emailValid": "someh@amalitech.com",
+  "emailInvalid": "hello@cypress.io",
+  "loginEmail": "acms@amalitech.org",
+  "loginPassword": "Pa@ssword1",
+  "acceptInviteName": "Mark Dan",
+  "acceptInviteEmail": "md@gmail.com",
+  "acceptInvitePassword": "12345",
+  "acceptInviteConPassword": "12345",
+  "acceptInviteEmailValid": "mark@amalitech.com",
+  "acceptInvitePasswordValid": "Ama@1234!",
+  "acceptInviteConPasswordValid": "Ama@1234!"
+}
