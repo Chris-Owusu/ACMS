@@ -9,7 +9,6 @@ pipeline {
     stages {
         stage('Set Console Code Page') {
             steps {
-                // Set console code page to UTF-8
                 bat 'chcp 65001'
             }
         }
@@ -21,7 +20,6 @@ pipeline {
         stage('Testing') {
             steps {
                 bat "npm install"
-                bat "npm fund"
                 bat "npx cypress run"
             }
         }
