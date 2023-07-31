@@ -8,30 +8,17 @@ pipeline {
         }
         stage('Testing') {
             steps {
-                script {
-                    def npmInstallOutput = powershell(returnStdout: true, script: 'npm install').trim()
-                    echo npmInstallOutput
+                // Run tests and save output to test_output.txt
+                powershell "npm run acms > test_output.txt"
 
-                    def npmRunOutput = powershell(returnStdout: true, script: 'npm run acms').trim()
-                    echo npmRunOutput
-
-                    // Combine the outputs to create a single file for cleanup (Optional)
-                    def combinedOutput = "${npmInstallOutput}\n${npmRunOutput}"
-                    writeFile file: 'test_output.txt', text: combinedOutput
-                }
+                // Clean the output and save to cleaned_output.txt
+                powershell "Get-Content test_output.txt | Select-String -NotMatch 'pattern' | Out-File cleaned_output.txt"
             }
         }
         stage('Deploying') {
             steps {
                 echo "Deploy the application"
             }
-        }
-    }
-    post {
-        always {
-            // Clean up the output using findstr
-            bat 'echo Cleaning up test output...'
-            bat 'findstr /v /r "\\[.*m" test_output.txt > cleaned_output.txt'
         }
     }
 }
