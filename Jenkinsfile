@@ -9,7 +9,7 @@ pipeline {
         stage('Testing') {
             steps {
                 sh "npm install"
-                sh "npx cypress run"
+                sh "npm run acms"
             }
         }
         stage('Deploying') {
