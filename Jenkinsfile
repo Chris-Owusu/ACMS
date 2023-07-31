@@ -8,17 +8,11 @@ pipeline {
         }
         stage('Testing') {
             steps {
-                script {
-                    def npmInstallOutput = powershell(returnStdout: true, script: 'npm install').trim()
-                    echo npmInstallOutput
+                // Run tests and save output to test_output.txt
+                powershell "npm run acms > test_output.txt"
 
-                    def npmRunOutput = powershell(returnStdout: true, script: 'npm run acms').trim()
-                    echo npmRunOutput
-
-                    // Combine the outputs to create a single file for cleanup (Optional)
-                    def combinedOutput = "${npmInstallOutput}\n${npmRunOutput}"
-                    writeFile file: 'test_output.txt', text: combinedOutput
-                }
+                // Clean the output and save to cleaned_output.txt
+                powershell "Get-Content test_output.txt | Select-String -NotMatch 'pattern' | Out-File cleaned_output.txt"
             }
         }
         stage('Deploying') {
@@ -29,11 +23,13 @@ pipeline {
     }
     post {
         always {
-            // Clean up the output using PowerShell to remove ANSI escape codes
+            // Debug the cleanup step
             powershell """
+                Write-Host "Cleaning up test output..."
                 Get-Content test_output.txt | ForEach-Object {
-                    $_ -replace "\\x1B\\[[0-9;]*[a-zA-Z]", ""
+                    $_ -replace "\`\\x1B\`\\[[0-9;]*[a-zA-Z]", ""
                 } | Out-File cleaned_output.txt
+                Write-Host "Cleanup completed."
             """
         }
     }
