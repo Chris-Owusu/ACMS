@@ -20,6 +20,7 @@ pipeline {
         stage('Testing') {
             steps {
                 bat "npm install"
+                bat "npm audit fix --force"
                 bat "npx cypress run"
             }
         }
