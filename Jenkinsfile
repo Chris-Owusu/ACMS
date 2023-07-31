@@ -8,8 +8,8 @@ pipeline {
         }
         stage('Testing') {
             steps {
-                sh "npm install"
-                sh "npm run acms"
+                powershell "npm install"
+                powershell "npm run acms"
             }
         }
         stage('Deploying') {
