@@ -1,17 +1,6 @@
 pipeline {
     agent any
-
-    // Set console code page to UTF-8
-    options {
-        timestamps()
-    }
-
     stages {
-        stage('Set Console Code Page') {
-            steps {
-                bat 'chcp 65001'
-            }
-        }
         stage('Building') {
             steps {
                 echo "Building the application"
@@ -30,4 +19,3 @@ pipeline {
         }
     }
 }
-
