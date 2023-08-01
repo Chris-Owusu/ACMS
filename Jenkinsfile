@@ -2,10 +2,6 @@ pipeline {
     agent any
 
     // Set console code page to UTF-8
-    options {
-        timestamps()
-    }
-
     stages {
         stage('Set Console Code Page') {
             steps {
@@ -20,7 +16,7 @@ pipeline {
         stage('Testing') {
             steps {
                 bat "npm install"
-                bat "npx cypress run"
+                bat "npm run acms"
             }
         }
         stage('Deploying') {
